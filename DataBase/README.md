@@ -184,17 +184,32 @@ WHERE b.status = 'active'
 
 This query includes offers with unknown availability or no stock. To return only offers explicitly marked as available, add `AND o.availability = 'in_stock'`. A `NULL` expiry does not prove freshness; the validity policy must define how to handle such offers.
 
-## Development Example
+## Sample Data
 
-The latest supplied script replaced the Brazilian sample with this fictional English-language record. The user indicated execution, but the final query output was not provided.
+The file `DataBase/Terraform/sql/sample_data.sql` inserts ten fictional US
+construction-material suppliers, one data source per supplier, and the same
+seven construction products for each supplier. It creates 70 products and 70
+offers, with prices that vary by supplier and examples of different stock and
+availability states. Run it after the four tables have been created.
 
-| Entity | Data |
-|---|---|
-| Business | `TerminalWay Demo`, country `GB` |
-| Source | `Test catalogue`, type `manual` |
-| Product | SKU `DEMO-001`, `Coffee beans 500 g`, brand `Demo Brand`, category `Food` |
-| Offer | External ID `DEMO-OFFER-001`, price `7.90 GBP`, stock `20`, availability `in_stock` |
-| Validity | 24 hours after insertion of the sample |
+The sample data is loaded manually through its own script; Terraform and
+`apply.sh` do not run this action. From `DataBase/Terraform`, run:
+
+```bash
+bash scripts/load-sample.sh
+```
+
+The script exports the database connection settings, including the Aurora
+endpoint configured in `DataBase/Terraform/variables.tf`, and obtains a
+temporary RDS IAM authentication token using the AWS CLI credentials of the
+current shell. It needs `aws`, `psql`, the RDS CA bundle at the configured path,
+permission to connect to the cluster, and the `core` tables must already exist.
+The SQL runs transactionally, inserts or updates only these sample records,
+and does not delete any records. It is safe to run again; IDs and external
+offer IDs are stable, while sync and offer timestamps are refreshed. If you
+change the connection defaults in Terraform, update them in
+`DataBase/Terraform/scripts/load-sample.sh` as well. The sample data is
+fictional and must not be treated as live inventory or pricing.
 
 ## Connecting Through CloudShell
 

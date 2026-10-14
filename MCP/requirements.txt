@@ -1,0 +1,5 @@
+# SDK v1 interface; intentionally bounded to avoid breaking v2 API changes.
+mcp>=1.12,<2
+boto3>=1.35,<2
+botocore[crt]>=1.35,<2
+psycopg[binary]>=3.2,<4

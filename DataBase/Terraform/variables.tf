@@ -25,4 +25,5 @@ variable "username" {
 variable "ssl_root_cert" {
   type        = string
   description = "Absolute path to the downloaded official RDS CA bundle."
+  default = "/Users/gneto/Projects/TerminalWay/DataBase/Terraform/certs/eu-north-1-combined-bundle.pem"
 }
