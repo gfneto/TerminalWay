@@ -1,3 +1,9 @@
+export RDS_HOST='terminalway-dev01.cluster-cd2gwcuy4tcm.eu-north-1.rds.amazonaws.com'
+export RDS_CA_BUNDLE="/Users/gneto/Downloads/terminalway-mcp/certs/eu-north-1-combined-bundle.pem"
+export ALLOWED_BUSINESS_IDS='11000000-0000-4000-8000-000000000001'
+python client_test.py --limit 1
+
+
 # TerminalWay MCP server
 
 Python MCP server exposing two read-only tools: `search_products` and `get_offer`. Includes catalogue functions, an Aurora IAM/TLS connection, stdio and authenticated Streamable HTTP transports, a Dockerfile, and a protocol test client. The server and smoke client are kept together in this project for local testing.

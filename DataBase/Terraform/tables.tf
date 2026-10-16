@@ -37,3 +37,13 @@ resource "terraform_data" "offers" {
     environment = local.connection
   }
 }
+
+resource "terraform_data" "reader" {
+  depends_on       = [terraform_data.offers]
+  triggers_replace = [local.target, local.script_hash, filesha256("${path.module}/sql/reader.sql")]
+  provisioner "local-exec" {
+    working_dir = path.module
+    command     = "bash scripts/apply.sh reader"
+    environment = local.connection
+  }
+}

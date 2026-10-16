@@ -6,9 +6,10 @@ This project creates the PostgreSQL database `terminalway`, schema `core` and fo
 
 - postgres.tf: creates the internal database if missing.
 - schema.tf: creates the core schema if missing.
-- tables.tf: applies each table's SQL in dependency order.
+- tables.tf: applies each table's SQL in dependency order, then configures the read-only IAM role.
 - variables.tf, locals.tf, versions.tf, outputs.tf: configuration.
 - sql/: table DDL, keys, checks and indexes matching our existing design.
+- sql/reader.sql: creates `terminalway_reader` and grants read access to the core tables.
 - scripts/apply.sh: fresh IAM token per operation, verified TLS and fail-fast SQL execution.
 - scripts/create-database.sh: manually creates the `terminalway` database on an existing Aurora cluster.
 - scripts/destroy-database.sh: manually drops the `terminalway` database after an explicit confirmation.

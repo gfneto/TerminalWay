@@ -21,9 +21,9 @@ case "${1:-}" in
     export PGDATABASE="$TARGET_DB"
     psql -X -v ON_ERROR_STOP=1 --single-transaction -f sql/001_schema.sql
     ;;
-  businesses|data_sources|products|offers)
+  businesses|data_sources|products|offers|reader)
     export PGDATABASE="$TARGET_DB"
-    psql -X -v ON_ERROR_STOP=1 --single-transaction -f "sql/$1.sql"
+    psql -X -v ON_ERROR_STOP=1 -v target_db="$TARGET_DB" --single-transaction -f "sql/$1.sql"
     ;;
-  *) echo "Usage: apply.sh database|schema|businesses|data_sources|products|offers" >&2; exit 1 ;;
+  *) echo "Usage: apply.sh database|schema|businesses|data_sources|products|offers|reader" >&2; exit 1 ;;
 esac
